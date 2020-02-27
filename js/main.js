@@ -1,11 +1,11 @@
-let firstNum = '';
+let firstNum = 0;
 let secondNum = '';
 let oper = '';
 let result = '';
 
 $(document).ready(function() { 
 
-	//	-used to catch when the user press any button;
+	//	-used to catch when the user presses any button;
 
 	$('button').click(function(e) {
 
@@ -25,39 +25,39 @@ $(document).ready(function() {
 		}  
 	});
 
-	//	-if firstNum is empty it assignes the number to it, otherwise it assignes it to secondNum;
+	//	-if the oper is empty it assignes the number to firstNum, otherwise it assignes it to secondNum;
 
 	function handleNumber(number) { 
 
-		if (firstNum === '') {      
-			firstNum = number;
 
+		if (oper === '') {      
+			firstNum = Number(String(firstNum) + String(number));
 		} 
 
 		else {       
-			secondNum = number;    
+			secondNum = Number(String(secondNum) + String(number));    
 		}
-		showBtn(number);
+		showResult(number);
 	}
 
 	//	-if the operator has a value, then it will calculate the result;
 
 	function handleOperator(operator) {
+ 
+			if (oper === '') { 
+	  			oper = operator;
+	  			showResult(operator);    
+			} 
 		
-		if (oper === '') { 
-	  		oper = operator;
-	  		showBtn(operator);    
-		} 
-		
-		else {
-		    handleResult();      
-		    oper = operator;
-		} 
+			else {
+		    	handleResult();      
+		    	oper = operator;
+			}
 	}
 
-	function showBtn(clickedBtn) {
+	function showResult(clickedBtn) {
 	
-		$('#result').text(clickedBtn);	
+		$('#result').text(firstNum + oper + secondNum + (result ? '=' +result : ''));	
 	}
 
 	/*	-creates the result based on what operator the user has pressed;
@@ -68,19 +68,23 @@ $(document).ready(function() {
 		switch(oper) {
 			case '+':
 				result = +firstNum + +secondNum;
-				showBtn(result);
+				showResult(result);
+		
 				break;
 			case '-':
 				result = +firstNum - +secondNum;
-				showBtn(result);
+				showResult(result);
+		
 				break;
 			case '/':
 				result = +firstNum / +secondNum;
-				showBtn(result);
+				showResult(result);
+		
 				break;
 			case 'x':
 				result = +firstNum * +secondNum;
-				showBtn(result);
+				showResult(result);
+		
 				break;
 			default:
 				break;
@@ -90,7 +94,7 @@ $(document).ready(function() {
 	}
 
 	function updateVariables() {
-		firstNum = '';
+		firstNum = 0;
 		secondNum = '';
 		oper = '';
 		result = '';
